@@ -1,4 +1,3 @@
-"""Load the seven course CSV files into a new, validated SQLite database."""
 import argparse
 import csv
 import json
@@ -16,13 +15,11 @@ def load_database(data_dir, db_path):
     data_dir, db_path = Path(data_dir), Path(db_path)
     if db_path.exists():
         raise FileExistsError(f"Refusing to overwrite {db_path}; choose a new --db path.")
-    # Build in memory first: invalid input never leaves a partial database.
     con = sqlite3.connect(":memory:")
     try:
         con.execute("PRAGMA foreign_keys = ON")
         con.executescript((ROOT / "schema.sql").read_text(encoding="utf-8"))
         with con:
-            # Employees can refer to managers later in the same CSV.
             con.execute("BEGIN")
             con.execute("PRAGMA defer_foreign_keys = ON")
             for table, expected in EXPECTED_COUNTS.items():
@@ -58,7 +55,6 @@ def load_database(data_dir, db_path):
         if integrity != "ok":
             raise ValueError(f"Integrity check failed: {integrity}")
         db_path.parent.mkdir(parents=True, exist_ok=True)
-        # Exclusive creation also prevents accidentally replacing an existing file.
         with db_path.open("xb"):
             pass
         try:
@@ -77,7 +73,7 @@ def load_database(data_dir, db_path):
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description="Load the seven course CSV files into a new, validated SQLite database.")
     parser.add_argument("--data-dir", type=Path, default=ROOT / "data")
     parser.add_argument("--db", type=Path, default=ROOT / "cs564_stage2.db")
     args = parser.parse_args()

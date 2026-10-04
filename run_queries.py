@@ -1,4 +1,3 @@
-"""Run q1-q3 against an existing database and export CSV results."""
 import argparse
 import csv
 from pathlib import Path
@@ -30,7 +29,7 @@ def run_queries(db_path, results_dir):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description="Run q1-q3 against an existing database and export CSV results.")
     parser.add_argument("--db", type=Path, default=ROOT / "cs564_stage2.db")
     parser.add_argument("--results-dir", type=Path, default=ROOT / "results")
     args = parser.parse_args()
