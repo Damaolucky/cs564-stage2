@@ -1,0 +1,14 @@
+{
+  "row_counts": {
+    "regions": 4,
+    "countries": 25,
+    "locations": 7,
+    "departments": 11,
+    "jobs": 19,
+    "employees": 40,
+    "dependents": 30
+  },
+  "integrity_check": "ok",
+  "foreign_key_violations": [],
+  "sqlite_version": "3.53.1"
+}

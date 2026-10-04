@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+.venv/
+
+# Keep the supplied employee/contact dataset local.
+data/*.csv
